@@ -2,21 +2,19 @@ package com.azienda.withAbstract.view;
 
 import java.util.Scanner;
 
-import com.azienda.noAbstract.model.Differenza;
-import com.azienda.noAbstract.model.Divisione;
-import com.azienda.noAbstract.model.OperazioniAritmetiche;
-import com.azienda.noAbstract.model.Prodotto;
-import com.azienda.noAbstract.model.Somma;
+import com.azienda.withAbstract.model.Differenza;
+import com.azienda.withAbstract.model.Divisione;
+import com.azienda.withAbstract.model.Prodotto;
+import com.azienda.withAbstract.model.RisultatoOperazione;
+import com.azienda.withAbstract.model.Somma;
 
 public class ChiamanteOperazioni {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		int choice;
-
 		int a, b;
-		// ciclo infinito (finché non decido di chiudere la calcolatrice)
-		while (true) {
 
+		while (true) {
 			choice = check(scanner);
 			if (choice == 5) {
 				scanner.close();
@@ -26,24 +24,28 @@ public class ChiamanteOperazioni {
 			a = scanner.nextInt();
 			System.out.println("inserire secondo numero");
 			b = scanner.nextInt();
-			OperazioniAritmetiche object;
+
+			// USA LA CLASSE ASTRATTA COME TIPO!
+			RisultatoOperazione object = null;
+
 			switch (choice) {
 			case 1:
 				object = new Somma();
-				object.printResult(object.operate(a, b));
 				break;
 			case 2:
 				object = new Differenza();
-				object.printResult(object.operate(a, b));
 				break;
 			case 3:
 				object = new Prodotto();
-				object.printResult(object.operate(a, b));
 				break;
 			case 4:
 				object = new Divisione();
-				object.printResult(object.operate(a, b));
 				break;
+			}
+
+			// GRAZIE ALLA TUA CLASSE ASTRATTA, PUOI FARE DIRETTAMENTE QUESTO:
+			if (object != null) {
+				object.printResult(a, b);
 			}
 		}
 	}
